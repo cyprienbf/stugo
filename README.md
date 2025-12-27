@@ -1,14 +1,16 @@
 # stugo
 
+![example_image](images/example_quiz.png)
+
 **stugo** is a lightweight, file-based study web application written in Go. It allows users to revise subjects using Flashcards or Quizzes, loading content dynamically from JSON files.
 
 ## Features
 
-- **No Database:** Data is loaded directly from local JSON files.
 - **Two Modes:**
   - ⚡ **Flashcards:** Flip cards to memorize answers.
   - 📝 **Quiz:** Type the exact answer to test your knowledge.
 - **Clean UI:** Built with [PicoCSS](https://picocss.com) for a minimal, responsive design.
+- **No Database:** Data is loaded directly from local JSON files.
 - **Read-Only Web Interface:** Content is managed via the file system, not the browser.
 
 ## How to Run
