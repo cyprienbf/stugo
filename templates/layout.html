@@ -1,0 +1,53 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stugo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            padding: 2rem;
+            border: 1px solid #333;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .nav-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><a href="/" class="nav-brand">Stugo</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        {{template "content" .}}
+    </main>
+</body>
+
+</html>
+{{end}}

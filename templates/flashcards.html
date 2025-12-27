@@ -1,0 +1,58 @@
+{{define "content"}}
+<hgroup>
+    <h1>{{.Title}} - Flashcards</h1>
+    <h2 id="progress">Card 1</h2>
+</hgroup>
+
+<article id="flashcard" class="card" onclick="flipCard()">
+    <h3 id="card-content">Loading...</h3>
+    <small id="instruction">(Click to flip)</small>
+</article>
+
+<div class="grid">
+    <button class="secondary" onclick="prevCard()">Previous</button>
+    <button onclick="nextCard()">Next</button>
+</div>
+
+<script>
+    const items = {{.Items | json}};
+    let currentIndex = 0;
+    let isShowingAnswer = false;
+
+    const contentEl = document.getElementById("card-content");
+    const instructionEl = document.getElementById("instruction");
+    const progressEl = document.getElementById("progress");
+
+    function render() {
+        if (!items || items.length === 0) return;
+        const item = items[currentIndex];
+        contentEl.innerText = isShowingAnswer ? item.answer : item.question;
+        instructionEl.innerText = isShowingAnswer ? "(Answer)" : "(Question - Click to reveal)";
+        progressEl.innerText = `Card ${currentIndex + 1} of ${items.length}`;
+    }
+
+    function flipCard() {
+        isShowingAnswer = !isShowingAnswer;
+        render();
+    }
+
+    function nextCard() {
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+            isShowingAnswer = false;
+            render();
+        }
+    }
+
+    function prevCard() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            isShowingAnswer = false;
+            render();
+        }
+    }
+
+    render();
+</script>
+{{end}}
+{{template "layout" .}}

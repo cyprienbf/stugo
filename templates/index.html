@@ -1,0 +1,15 @@
+{{define "content"}}
+<hgroup>
+    <h1>Available Courses</h1>
+    <h2>Select a subject to start revising</h2>
+</hgroup>
+<div class="grid">
+    {{range .}}
+    <article>
+        <header>{{.Title}}</header>
+        <a href="/select?id={{.ID}}" role="button" class="outline">Open</a>
+    </article>
+    {{end}}
+</div>
+{{end}}
+{{template "layout" .}}

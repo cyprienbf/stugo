@@ -1,0 +1,22 @@
+{{define "content"}}
+<hgroup>
+    <h1>{{.Title}}</h1>
+    <h2>Select a revision mode</h2>
+</hgroup>
+
+<div class="grid">
+    <article>
+        <header>Flashcards</header>
+        <p>Flip cards to memorize answers.</p>
+        <a href="/study?id={{.ID}}&mode=flashcards" role="button">Start Flashcards</a>
+    </article>
+    <article>
+        <header>Quiz</header>
+        <p>Type the exact answer.</p>
+        <a href="/study?id={{.ID}}&mode=quiz" role="button" class="contrast">Start Quiz</a>
+    </article>
+</div>
+<br>
+<a href="/" class="secondary">Back to Courses</a>
+{{end}}
+{{template "layout" .}}

@@ -1,0 +1,88 @@
+{{define "content"}}
+<hgroup>
+    <h1>{{.Title}} - Quiz</h1>
+    <h2 id="progress">Question 1</h2>
+</hgroup>
+
+<article>
+    <h3 id="question-text">Loading...</h3>
+    <input type="text" id="user-answer" placeholder="Type your answer here..." autocomplete="off">
+    <p id="feedback" style="font-weight: bold; min-height: 1.5rem;"></p>
+    <button id="submit-btn" onclick="checkAnswer()">Submit</button>
+    <button id="next-btn" class="secondary hidden" onclick="nextQuestion()">Next Question</button>
+</article>
+
+<script>
+    const items = {{.Items | json}};
+    let currentIndex = 0;
+
+    const questionEl = document.getElementById("question-text");
+    const inputEl = document.getElementById("user-answer");
+    const feedbackEl = document.getElementById("feedback");
+    const submitBtn = document.getElementById("submit-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const progressEl = document.getElementById("progress");
+
+    function render() {
+        if (!items || items.length === 0) return;
+        questionEl.innerText = items[currentIndex].question;
+        inputEl.value = "";
+        inputEl.disabled = false;
+        feedbackEl.innerText = "";
+        feedbackEl.className = "";
+        submitBtn.classList.remove("hidden");
+        nextBtn.classList.add("hidden");
+        progressEl.innerText = `Question ${currentIndex + 1} of ${items.length}`;
+        inputEl.focus();
+    }
+
+    function checkAnswer() {
+        const userAnswer = inputEl.value.trim().toLowerCase();
+        const correctAnswer = items[currentIndex].answer.toLowerCase();
+
+        inputEl.disabled = true;
+        submitBtn.classList.add("hidden");
+        nextBtn.classList.remove("hidden");
+
+        if (userAnswer === correctAnswer) {
+            feedbackEl.innerText = "Correct!";
+            feedbackEl.style.color = "#2ecc71";
+        } else {
+            feedbackEl.innerText = `Incorrect. The answer was: ${items[currentIndex].answer}`;
+            feedbackEl.style.color = "#e74c3c";
+        }
+    }
+
+    function nextQuestion() {
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+            render();
+        } else {
+            questionEl.innerText = "Quiz Completed!";
+            inputEl.classList.add("hidden");
+            feedbackEl.innerText = "";
+            nextBtn.classList.add("hidden");
+            progressEl.innerText = "";
+
+            const homeBtn = document.createElement("a");
+            homeBtn.href = "/";
+            homeBtn.role = "button";
+            homeBtn.innerText = "Back to Menu";
+            document.querySelector("article").appendChild(homeBtn);
+        }
+    }
+
+    inputEl.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            if (!submitBtn.classList.contains("hidden")) {
+                checkAnswer();
+            } else if (!nextBtn.classList.contains("hidden")) {
+                nextQuestion();
+            }
+        }
+    });
+
+    render();
+</script>
+{{end}}
+{{template "layout" .}}
